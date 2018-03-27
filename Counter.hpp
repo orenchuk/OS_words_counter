@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <map>
 #include <vector>
+#include <thread>
+#include <mutex>
 #include <boost/algorithm/string.hpp>
 
 using std::string;
@@ -21,6 +23,8 @@ using std::endl;
 using std::cout;
 using std::map;
 using std::vector;
+using std::thread;
+using std::mutex;
 
 class Counter {
 private:

@@ -5,7 +5,7 @@
 
 #include "Counter.hpp"
 
-string Counter::read_file(const char filename[]) {
+string Counter::read_file(const char *filename) {
     
     int descriptor = open(filename, O_RDONLY);
     
@@ -34,8 +34,10 @@ int Counter::write_file() {     // TODO: Kachka is working on
     return 0;
 }
 
-bool Counter::mapping_string(const string &str) {
+bool Counter::mapping_string(const string &str) { // TODO: make it with multiple threads
     vector<string> str_vector;
+    vector<thread> threads;
+    mutex m;
     words = {};
     string delimiters(" ;,:.-\n\t");
     
