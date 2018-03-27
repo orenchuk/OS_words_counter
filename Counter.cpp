@@ -29,15 +29,41 @@ string Counter::read_file(const char *filename) {
 }
 
 int Counter::write_file() {     // TODO: Kachka is working on
-
     
     return 0;
 }
+/*
+void Counter::fill_map(const vector<string> &vect, int from, int to, map<string, int> &temp_map, mutex &m) {
+    for (auto it = vect.begin() + from; it < vect.begin() + to; ++it) {
+        cout << *it << endl;
+    }
+}
+
+bool Counter::mapping_string(const string &str, int n_threads) { // TODO: fix multiple threading
+    vector<string> str_vector;
+    vector<thread> threads;
+    vector<map<string, int>> maps;
+    mutex m;
+    words = {};
+    string delimiters(" ;,:.-\n\t");
+    
+    string str_lower = boost::algorithm::to_lower_copy(str);
+    boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);
+
+    
+    for (int i = 0; i < n_threads; ++i) {
+        map<string, int> map;
+        threads.emplace_back(thread(&Counter::fill_map, std::ref(str_vector), 0, 10, std::ref(map), std::ref(m)));
+    }
+    
+    words.erase("");
+    
+    return true;
+}
+*/
 
 bool Counter::mapping_string(const string &str) { // TODO: make it with multiple threads
     vector<string> str_vector;
-    vector<thread> threads;
-    mutex m;
     words = {};
     string delimiters(" ;,:.-\n\t");
     

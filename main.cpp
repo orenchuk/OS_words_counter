@@ -43,12 +43,12 @@ int main(int argc, const char * argv[]) {
     timer_total.start();
     timer_reading.start();
     
-    string s = counter.read_file(filename);
+    string str = counter.read_file(filename);
     
     timer_reading.stop();
     timer_analyze.start();
     
-    counter.mapping_string(s);
+    counter.mapping_string(str);
     
     timer_analyze.stop();
     timer_total.stop();
