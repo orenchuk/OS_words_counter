@@ -14,7 +14,7 @@ string Counter::read_file(const char filename[]) {
         exit(EXIT_FAILURE);
     }
     
-    const int BUFFERSIZE = 10000;
+    const int BUFFERSIZE = 1000000;
     string result;
     char buff[BUFFERSIZE];
     ssize_t bytes;
@@ -28,13 +28,13 @@ string Counter::read_file(const char filename[]) {
     return result;
 }
 
-int Counter::write_file() {
-    
+int Counter::write_file() {     // TODO: Kachka is working on
+
     
     return 0;
 }
 
-vector<string> Counter::mapping_string(const string &str) {
+bool Counter::mapping_string(const string &str) {
     vector<string> str_vector;
     words = {};
     string delimiters(" ;,:.-\n\t");
@@ -48,12 +48,15 @@ vector<string> Counter::mapping_string(const string &str) {
     
     words.erase("");
     
-    return str_vector;
+    return true;
 }
 
-map<string, int> Counter::get_map_and_print() {
+map<string, int> Counter::get_map() {
+    return words;
+}
+
+void Counter::print_map() {
     for (auto& m : words) {
         cout << m.first << " - " << m.second << endl;
     }
-    return words;
 }

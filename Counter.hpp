@@ -28,8 +28,10 @@ private:
 public:
     string read_file(const char*);
     int write_file();
-    vector<string> mapping_string(const string&);
-    map<string, int> get_map_and_print();
+    bool mapping_string(const string&);
+    map<string, int> get_map();
+    map<string, int> get_map_sorted_by_value(); // TODO: make sorting by value with tuples and vector
+    void print_map();
 };
 
 #endif /* Counter_hpp */
