@@ -11,7 +11,7 @@ int main(int argc, const char * argv[]) {
     timer_total.start();
     timer_reading.start();
     
-    string s = counter.read_file(argv[1]);
+    string s = counter.read_file(argv[1]); // TODO: make parser for multiple arguments
     
     timer_reading.stop();
     timer_analyze.start();
