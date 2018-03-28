@@ -48,10 +48,12 @@ int main(int argc, const char * argv[]) {
     timer_reading.stop();
     timer_analyze.start();
     
-    counter.mapping_string(str);
+    counter.mapping_string(str, n_threads);
     
     timer_analyze.stop();
     timer_total.stop();
+    
+//    counter.print_map_of_words();
 
     cout << "Loading: " << timer_reading.total_time_ms() << "ms" << endl;
     cout << "Analyzing: " << timer_analyze.total_time_ms() << "ms" << endl;

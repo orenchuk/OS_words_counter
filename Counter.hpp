@@ -29,7 +29,7 @@ using std::mutex;
 class Counter {
 private:
     map<string, int> words;
-    void fill_map(const vector<string>&, int, int, map<string, int>&, mutex&);
+    static void fill_map(const vector<string>&, int, int, map<string, int>*, mutex&);
 public:
     string read_file(const char*);
     int write_file();
@@ -37,7 +37,7 @@ public:
     bool mapping_string(const string&, int);
     map<string, int> get_map();
     map<string, int> get_map_sorted_by_value(); // TODO: make sorting by value with tuples and vector
-    void print_map();
+    void print_map_of_words();
 };
 
 #endif /* Counter_hpp */
