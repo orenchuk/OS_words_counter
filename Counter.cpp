@@ -33,24 +33,19 @@ int Counter::write_file() {     // TODO: Kachka is working on
     return 0;
 }
 
-void Counter::fill_map(const vector<string> &vect, int from, int to, map<string, int> *part_map, mutex &m) {
-    map<string, int> temp_map;
+void Counter::fill_map(const vector<string> &vect, int from, int to, map<string, int> &part_map, mutex &m) {
     for (auto it = vect.begin() + from; it < vect.begin() + to; it++) {
-        ++temp_map[*it];
+        ++part_map[*it];
     }
-    std::lock_guard<std::mutex> lock(m);
-    
-    for(auto &it: temp_map)
-        (*part_map)[it.first] += it.second;
 }
 
-bool Counter::mapping_string(const string &str, int n_threads) { // TODO: fix multiple threading
+bool Counter::mapping_string(const string &str, int n_threads) {
     vector<string> str_vector;
     vector<thread> threads;
-    vector<map<string, int>*> maps;
+    vector<map<string, int>> maps(n_threads);
     mutex m;
     words = {};
-    string delimiters(" ;,:.-\n\t");
+    string delimiters(" ;,:.\n\t");
     
     string str_lower = boost::algorithm::to_lower_copy(str);
     boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);
@@ -61,11 +56,10 @@ bool Counter::mapping_string(const string &str, int n_threads) { // TODO: fix mu
         size_t from = 0, to = from + step;
         
         for (int i = 0; i < n_threads; ++i) {
-            cout << "from: " << from << ", to: " << to << endl;
-            maps.push_back(new map<string, int>);
-            threads.push_back(thread(Counter::fill_map, std::ref(str_vector), from, to, maps[i], std::ref(m)));
+//            cout << "from: " << from << ", to: " << to << endl;
+            threads.emplace_back(Counter::fill_map, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
 
-            from = to + 1;
+            from = to;
             to += step;
             if (i == n_threads - 2) { to = max; }
         }
@@ -74,8 +68,8 @@ bool Counter::mapping_string(const string &str, int n_threads) { // TODO: fix mu
             t.join();
         }
         
-        for (map<string, int> *m : maps) {
-            for (auto it = m->begin(); it != m->end(); it++) {
+        for (auto &m : maps) {
+            for (auto it = m.begin(); it != m.end(); it++) {
 //                cout << it->first << " - " << it->second << endl;
                 words[it->first] += it->second;
             }
@@ -90,10 +84,10 @@ bool Counter::mapping_string(const string &str, int n_threads) { // TODO: fix mu
     return true;
 }
 
-bool Counter::mapping_string(const string &str) { // TODO: make it with multiple threads
+bool Counter::mapping_string(const string &str) {
     vector<string> str_vector;
     words = {};
-    string delimiters(" ;,:.-\n\t");
+    string delimiters(" ;!?“!_”()_‘—`\"\',:.-\n\t");
     
     string str_lower = boost::algorithm::to_lower_copy(str);
     boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);
@@ -107,11 +101,50 @@ bool Counter::mapping_string(const string &str) { // TODO: make it with multiple
     return true;
 }
 
+vector<pair<string, int>> Counter::get_vector_sorted_by_value() {
+    auto vector_pairs = get_vector_sorted_by_key();
+    
+    std::sort(vector_pairs.begin(), vector_pairs.end(), [](auto &left, auto& right) {
+        if (left.second < right.second) {
+            return true;
+        } else if (left.second == right.second) {
+            if (left.first < right.first) {
+                return true;
+            }
+        }
+        return false;
+    });
+    
+//    for (auto & v : vector_pairs) {
+//        cout << v.first << " - " << v.second << endl;
+//    }
+    
+    return vector_pairs;
+}
+
+vector<pair<string, int>> Counter::get_vector_sorted_by_key() {
+    if (words.empty()) {
+        cerr << "Error: map of words is empty, try func mapping_string() first" << endl;
+        exit(-1);
+    }
+    
+    vector<pair<string, int>> vector_pairs;
+    
+    for (auto& w : words) {
+        vector_pairs.push_back(pair<string, int> (w.first, w.second));
+    }
+    return vector_pairs;
+}
+
 map<string, int> Counter::get_map() {
     return words;
 }
 
 void Counter::print_map_of_words() {
+    if (words.empty()) {
+        cerr << "Error: map of words is empty, try func mapping_string() first" << endl;
+    }
+    
     for (auto& m : words) {
         cout << m.first << " - " << m.second << endl;
     }

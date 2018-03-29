@@ -53,6 +53,8 @@ int main(int argc, const char * argv[]) {
     timer_analyze.stop();
     timer_total.stop();
     
+    counter.get_vector_sorted_by_value();
+    
 //    counter.print_map_of_words();
 
     cout << "Loading: " << timer_reading.total_time_ms() << "ms" << endl;

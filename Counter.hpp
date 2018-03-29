@@ -25,18 +25,20 @@ using std::map;
 using std::vector;
 using std::thread;
 using std::mutex;
+using std::pair;
 
 class Counter {
 private:
     map<string, int> words;
-    static void fill_map(const vector<string>&, int, int, map<string, int>*, mutex&);
+    static void fill_map(const vector<string>&, int, int, map<string, int>&, mutex&);
 public:
     string read_file(const char*);
     int write_file();
     bool mapping_string(const string&);
     bool mapping_string(const string&, int);
     map<string, int> get_map();
-    map<string, int> get_map_sorted_by_value(); // TODO: make sorting by value with tuples and vector
+    vector<pair<string, int>> get_vector_sorted_by_key();
+    vector<pair<string, int>> get_vector_sorted_by_value();
     void print_map_of_words();
 };
 
