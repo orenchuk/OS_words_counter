@@ -57,7 +57,7 @@ bool Counter::mapping_string(const string &str, int n_threads) {
         
         for (int i = 0; i < n_threads; ++i) {
 //            cout << "from: " << from << ", to: " << to << endl;
-            threads.emplace_back(Counter::fill_map, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
+            threads.emplace_back(&Counter::fill_map, this, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
 
             from = to;
             to += step;
