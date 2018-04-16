@@ -6,7 +6,6 @@
 #include "Counter.hpp"
 
 string Counter::read_file(const char *filename) {
-    
     int descriptor = open(filename, O_RDONLY);
     
     if (descriptor == -1) {
@@ -28,8 +27,16 @@ string Counter::read_file(const char *filename) {
     return result;
 }
 
-int Counter::write_file() {     // TODO: Kachka is working on
+int Counter::write_file(vector<pair<string, int>> vect, string filename) {
+    std::ofstream outfile(filename);
+    int index = 0;
     
+    for (auto& v : vect) {
+        ++index;
+        outfile << index << ". " << v.first << "\t" << v.second << endl;
+    }
+    
+    outfile.close();
     return 0;
 }
 
@@ -87,7 +94,7 @@ bool Counter::mapping_string(const string &str, int n_threads) {
 bool Counter::mapping_string(const string &str) {
     vector<string> str_vector;
     words = {};
-    string delimiters(" ;!?“!_”()_‘—`\"\',:.-\n\t");
+    string delimiters(" ;?“!_()‘—`\"\',:.-\n\t");
     
     string str_lower = boost::algorithm::to_lower_copy(str);
     boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);

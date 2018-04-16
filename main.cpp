@@ -80,13 +80,18 @@ int main(int argc, const char * argv[]) {
     timer_analyze.stop();
     timer_total.stop();
     
-    counter.get_vector_sorted_by_value();
+    auto vect_by_n = counter.get_vector_sorted_by_value();
+    counter.write_file(vect_by_n, Config.out_by_n);
     
-    counter.print_map_of_words();
+    auto vect_by_a = counter.get_vector_sorted_by_key();
+    counter.write_file(vect_by_a, Config.out_by_a);
+    
+//    counter.print_map_of_words();
 
-    cout << "Loading: " << timer_reading.total_time_ms() << "ms" << endl;
-    cout << "Analyzing: " << timer_analyze.total_time_ms() << "ms" << endl;
-    cout << "Total: " << timer_total.total_time_ms() << "ms" << endl;
+    cerr << "Loading: " << timer_reading.total_time_ms() << "ms" << endl;
+    cerr << "Analyzing: " << timer_analyze.total_time_ms() << "ms" << endl;
+    cerr << "Total: " << timer_total.total_time_ms() << "ms" << endl;
+    cout << timer_total.total_time_ms() << endl;
     
-    return 0;
+    return (int)timer_total.total_time_ms();
 }

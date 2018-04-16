@@ -11,6 +11,7 @@
 #include <string>
 #include <fcntl.h>
 #include <unistd.h>
+#include <fstream>
 #include <map>
 #include <vector>
 #include <thread>
@@ -33,7 +34,7 @@ private:
     void fill_map(const vector<string>&, int, int, map<string, int>&, mutex&);
 public:
     string read_file(const char*);
-    int write_file();
+    int write_file(vector<pair<string, int>>, string);
     bool mapping_string(const string&);
     bool mapping_string(const string&, int);
     map<string, int> get_map();
