@@ -56,6 +56,12 @@ int main(int argc, const char * argv[]) {
     
     if (argc == 1) {
         Config = args_parser_ini("config.ini");
+    } else if (argc == 2) {
+        Config = args_parser_ini("config.ini");
+        int n;
+        if ((n = atoi(argv[1])) != 0) {
+            Config.threads = n;
+        }
     } else {
         Config = args_parser(argc, argv);
     }
