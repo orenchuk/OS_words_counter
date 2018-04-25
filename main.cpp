@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
         Config = args_parser(argc, argv);
     }
     
-    cout << "threads: " << Config.threads << endl;
+    cerr << "threads: " << Config.threads << endl;
     
     Timer timer_total;
     Timer timer_reading;

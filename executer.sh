@@ -1,8 +1,7 @@
 #!/bin/bash
-N=2
-
+N=5
+rm res.txt
 for i in $(seq 1 $N)
 do
-    echo ""
-    $output
+    ./counter >>  res.txt
 done
