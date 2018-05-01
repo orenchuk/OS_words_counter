@@ -76,12 +76,12 @@ int main(int argc, const char * argv[]) {
     timer_total.start();
     timer_reading.start();
     
-    string str = counter.read_file(Config.infile.c_str());
+    vector<string> words = counter.read_file(Config.infile);
     
     timer_reading.stop();
     timer_analyze.start();
     
-    counter.mapping_string(str, Config.threads);
+    counter.mapping_string(words, Config.threads);
     
     timer_analyze.stop();
     timer_total.stop();

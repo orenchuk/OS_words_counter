@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <string>
 #include <fcntl.h>
 #include <unistd.h>
@@ -17,6 +18,7 @@
 #include <thread>
 #include <mutex>
 #include <boost/algorithm/string.hpp>
+#include <boost/range/algorithm/remove_if.hpp>
 
 using std::string;
 using std::cerr;
@@ -31,12 +33,13 @@ using std::pair;
 class Counter {
 private:
     map<string, int> words;
-    void fill_map(const vector<string>&, int, int, map<string, int>&, mutex&);
+    void fill_map(vector<string>&, int, int, map<string, int>&, mutex&);
 public:
-    string read_file(const char*);
+    vector<string> read_file(string);
     int write_file(vector<pair<string, int>>, string);
     bool mapping_string(const string&);
-    bool mapping_string(const string&, int);
+//    bool mapping_string(const string&, int);
+    bool mapping_string(vector<string>&, int);
     map<string, int> get_map();
     vector<pair<string, int>> get_vector_sorted_by_key();
     vector<pair<string, int>> get_vector_sorted_by_value();
