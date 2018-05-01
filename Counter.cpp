@@ -31,75 +31,12 @@ int Counter::write_file(vector<pair<string, int>> vect, string filename) {
 
 void Counter::fill_map(vector<string> &vect, int from, int to, map<string, int> &part_map, mutex &m) {    
     for (auto it = vect.begin() + from; it < vect.begin() + to; it++) {
-//        if (*it == "") { break; } // TO-DO: remove empty string
+//        if (*it == "") { break; } // TO-DO: ask about empty string
         boost::algorithm::to_lower(*it);
         *it->erase(boost::remove_if(*it, boost::is_any_of(" ;?“!_()‘—`\"\',:.-\n\t")), it->end());
         ++part_map[*it];
     }
 }
-/*
-bool Counter::mapping_string(const string &str, int n_threads) {
-    vector<string> str_vector;
-    vector<thread> threads;
-    vector<map<string, int>> maps(n_threads);
-    mutex m;
-    words = {};
-    string delimiters(" ;,:.\n\t");
-    
-    string str_lower = boost::algorithm::to_lower_copy(str);
-    boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);
-    
-    try {
-        size_t max = str_vector.size();
-        const size_t step = max / n_threads;
-        size_t from = 0, to = from + step;
-        
-        for (int i = 0; i < n_threads; ++i) {
-//            cout << "from: " << from << ", to: " << to << endl;
-            threads.emplace_back(&Counter::fill_map, this, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
-
-            from = to;
-            to += step;
-            if (i == n_threads - 2) { to = max; }
-        }
-        
-        for (auto& t : threads) {
-            t.join();
-        }
-        
-        for (auto &m : maps) {
-            for (auto it = m.begin(); it != m.end(); it++) {
-//                cout << it->first << " - " << it->second << endl;
-                words[it->first] += it->second;
-            }
-        }
-        
-    } catch (std::exception &e) {
-        std::cerr << "exception: " << e.what() << endl;
-    }
-    
-    words.erase("");
-    
-    return true;
-}
-
-bool Counter::mapping_string(const string &str) {
-    vector<string> str_vector;
-    words = {};
-    string delimiters(" ;?“!_()‘—`\"\',:.-\n\t");
-    
-    string str_lower = boost::algorithm::to_lower_copy(str);
-    boost::split(str_vector, str_lower, boost::is_any_of(delimiters), boost::token_compress_on);
-    
-    for (auto& s : str_vector) {
-        ++words[s];
-    }
-    
-    words.erase("");
-    
-    return true;
-}
-*/
 
 bool Counter::mapping_string(vector<string> &str_vector, int n_threads) {
     vector<thread> threads;
@@ -113,7 +50,6 @@ bool Counter::mapping_string(vector<string> &str_vector, int n_threads) {
         size_t from = 0, to = from + step;
         
         for (int i = 0; i < n_threads; ++i) {
-//            cout << "from: " << from << ", to: " << to << endl;
             threads.emplace_back(&Counter::fill_map, this, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
             
             from = to;
@@ -127,7 +63,6 @@ bool Counter::mapping_string(vector<string> &str_vector, int n_threads) {
         
         for (auto &m : maps) {
             for (auto it = m.begin(); it != m.end(); it++) {
-//                cout << it->first << " - " << it->second << endl;
                 words[it->first] += it->second;
             }
         }
@@ -152,10 +87,6 @@ vector<pair<string, int>> Counter::get_vector_sorted_by_value() {
         }
         return false;
     });
-    
-//    for (auto & v : vector_pairs) {
-//        cout << v.first << " - " << v.second << endl;
-//    }
     
     return vector_pairs;
 }
