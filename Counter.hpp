@@ -37,8 +37,6 @@ private:
 public:
     vector<string> read_file(string);
     int write_file(vector<pair<string, int>>, string);
-    bool mapping_string(const string&);
-//    bool mapping_string(const string&, int);
     bool mapping_string(vector<string>&, int);
     map<string, int> get_map();
     vector<pair<string, int>> get_vector_sorted_by_key();
