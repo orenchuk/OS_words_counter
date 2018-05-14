@@ -33,7 +33,7 @@ using std::pair;
 class Counter {
 private:
     map<string, int> words;
-    void fill_map(vector<string>&, int, int, map<string, int>&, mutex&);
+    void fill_map(vector<string>&, int, int, map<string, int>&);
 public:
     vector<string> read_file(string);
     int write_file(vector<pair<string, int>>, string);

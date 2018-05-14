@@ -17,12 +17,12 @@ inline long long Timer::time_ms(const T& t) {
     return std::chrono::duration_cast<std::chrono::microseconds>(t).count();
 }
 
-time_point Timer::start() {
+mytime_point Timer::start() {
     start_point = get_current_time();
     return start_point;
 }
 
-time_point Timer::stop() {
+mytime_point Timer::stop() {
     stop_point = get_current_time();
     return stop_point;
 }

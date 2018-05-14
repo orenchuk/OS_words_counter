@@ -29,7 +29,7 @@ int Counter::write_file(vector<pair<string, int>> vect, string filename) {
     return 0;
 }
 
-void Counter::fill_map(vector<string> &vect, int from, int to, map<string, int> &part_map, mutex &m) {    
+void Counter::fill_map(vector<string> &vect, int from, int to, map<string, int> &part_map) {    
     for (auto it = vect.begin() + from; it < vect.begin() + to; it++) {
 //        if (*it == "") { break; } // TO-DO: ask about empty string
         boost::algorithm::to_lower(*it);
@@ -50,7 +50,7 @@ bool Counter::mapping_string(vector<string> &str_vector, int n_threads) {
         size_t from = 0, to = from + step;
         
         for (int i = 0; i < n_threads; ++i) {
-            threads.emplace_back(&Counter::fill_map, this, std::ref(str_vector), from, to, std::ref(maps[i]), std::ref(m));
+            threads.emplace_back(&Counter::fill_map, this, std::ref(str_vector), from, to, std::ref(maps[i]));
             
             from = to;
             to += step;
