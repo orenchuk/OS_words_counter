@@ -14,15 +14,15 @@ inline time_point_high_res Timer::get_current_time() {
 
 template <class T>
 inline long long Timer::time_ms(const T& t) {
-    return std::chrono::duration_cast<std::chrono::microseconds>(t).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(t).count();
 }
 
-mytime_point Timer::start() {
+time_point_high_res Timer::start() {
     start_point = get_current_time();
     return start_point;
 }
 
-mytime_point Timer::stop() {
+time_point_high_res Timer::stop() {
     stop_point = get_current_time();
     return stop_point;
 }
